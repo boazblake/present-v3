@@ -1,0 +1,27 @@
+{
+  "name": "trello-client",
+  "version": "1.0.0",
+  "main": "index.js",
+  "license": "MIT",
+  "scripts": {
+    "clean": "rm -rf ./dist && rm -rf ./node_modules",
+    "clean-start": "rm -rf dist && yarn run start",
+    "fresh": "yarn run clean && yarn install && yarn run start",
+    "start": "vite",
+    "build": "yarn run build:pre && vite build",
+    "preview": "vite preview",
+    "build:pre": "rm -rf dist"
+  },
+  "dependencies": {
+    "@bunchtogether/vite-plugin-flow": "^1.0.2",
+    "data.task": "^3.1.2",
+    "flow-remove-types": "^2.179.0",
+    "interactjs": "^1.9.10",
+    "mithril": "^2.2.0",
+    "mithril-stream": "^2.0.0",
+    "ramda": "^0.27.0"
+  },
+  "devDependencies": {
+    "vite": "^2.6.2"
+  }
+}
