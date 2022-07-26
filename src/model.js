@@ -1,92 +1,53 @@
-import Task from "data.task"
-import http from "./http"
-import { log, uuid } from "./helpers"
-import { propEq } from "ramda"
+import http from "./http.js"
+import { log, uuid } from "./helpers.ts"
+import Stream from 'mithril-stream'
 
-export const loadProject = (mdl) =>
-  mdl.projects.find(propEq("id", mdl.currentProject?.id)) || mdl.projects[0]
+export const loadAllPresentationsTask = (mdl) =>
+  mdl.http
+    .getTask(mdl, "presentations")
+    .fork(log("error"), presentations => mdl.presentations = presentations)
 
-export const load = (mdl) => {
-  const getProjectsTask = (mdl) => mdl.http.getTask(mdl, "projects")
-  const getTicketsTask = (mdl) => mdl.http.getTask(mdl, "tickets")
-  const getIssuesTask = (mdl) => mdl.http.getTask(mdl, "issues")
+export const loadSlidesByProjectId = (mdl, presentationId) =>
+  mdl.http
+    .getTask(mdl, `presentation/${presentationId}`,)
+    .fork(_ => { mdl.error = 'No Presentation with that Id' }, data => {
+      mdl.slides = data.slides
+      mdl.presentation = data.presentation
+    })
 
-  const toViewModel = ({ projects, tickets, issues }) => {
-    let sortedTickets = tickets
-      .map((ticket) => {
-        ticket.issues = issues
-          .filter(propEq("ticketId", ticket.id))
-          .sort((a, b) => a.order - b.order)
-        return ticket
-      })
-      .sort((a, b) => a.order - b.order)
 
-    return {
-      tickets: sortedTickets,
-      projects: projects.map((project) => {
-        project.tickets = sortedTickets
-          .filter(propEq("projectId", project.id))
-          .sort((a, b) => a.order - b.order)
-        return project
-      }),
-      issues: issues,
-    }
-  }
 
-  const onSuccess = ({ projects, tickets, issues }) => {
-    mdl.projects = projects
-    mdl.tickets = tickets
-    mdl.issues = issues
-    mdl.currentProject = loadProject(mdl)
-  }
-
-  Task.of(
-    (projects) => (tickets) => (issues) =>
-      toViewModel({ projects, tickets, issues })
-  )
-    .ap(getProjectsTask(mdl))
-    .ap(getTicketsTask(mdl))
-    .ap(getIssuesTask(mdl))
-    .fork(log("error"), onSuccess)
-}
-
-export const ISSUE = (ticketId, order = 0) => ({
-  id: uuid(),
-  title: "",
-  text: "",
-  ticketId,
-  order,
-})
-export const TICKET = (title, projectId, order = 0) => ({
-  id: uuid(),
-  title,
-  order,
-  projectId,
-})
-export const PROJECT = (title, order = 0) => ({
+export const PRESENTATION = (title, order = 0) => ({
   title,
   id: uuid(),
   order,
+})
+
+export const SLIDE = (title, presentationId, order = 0) => ({
+  title,
+  id: uuid(),
+  contents: '',
+  order,
+  presentationId
 })
 
 const model = {
-  state: {},
   http,
   settings: {},
   state: {
+    editor: true,
     dragging: {
-      oldTicketId: "",
-      issueId: "",
+      slideId: "",
     },
-    ticketIds: [],
-    issues: [],
     showModal: false,
     modalContent: null,
+    showMiniSlider: Stream(false)
   },
-  projects: [],
-  tickets: [],
-  issues: [],
-  currentProject: null,
+  presentations: [],
+  slides: [],
+  currentPresentationId: null,
+  currentSlideId: null,
+  toggleMode: mdl => mdl.state.editor = !mdl.state.editor
 }
 export default model
 

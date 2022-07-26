@@ -1,1 +1,1 @@
-# Mithril Trello / Lean Coffee
+# Mithril presentations / Lean Coffee

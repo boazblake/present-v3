@@ -1,8 +1,8 @@
 {
-  "short_name": "trello",
-  "name": "trello",
+  "short_name": "presentations",
+  "name": "presentations",
   "icons": [],
-  "start_url": "/trello",
+  "start_url": "/presentations",
   "background_color": "#3367D6",
   "display": "standalone",
   "scope": "/",

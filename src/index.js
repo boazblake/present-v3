@@ -1,6 +1,8 @@
 import m from "mithril"
 import "./styles/app.css"
 import "./styles/w3-styles.css"
+import '@toast-ui/editor/dist/toastui-editor.css'; // Editor's Style
+
 import App from "./app.js"
 import model from "./model.js"
 
@@ -45,6 +47,5 @@ const checkWidth = (winW) => {
 model.settings.profile = getProfile(winW)
 
 checkWidth(winW)
-
-m.mount(root, App(model))
+m.route(root, '/', App(model))
 

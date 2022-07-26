@@ -3,8 +3,9 @@ const Modal = ({ attrs: { mdl } }) => {
   return {
     view: () =>
       m(
-        ".w3-modal#modal",
+        "dialog.w3-modal#modal",
         {
+          open: mdl.state.showModal,
           onclick: (e) => {
             if (e.target.id == "modal") {
               mdl.state.showModal = false
@@ -13,9 +14,8 @@ const Modal = ({ attrs: { mdl } }) => {
           },
           style: { display: mdl.state.showModal ? "block" : "none" },
         },
-        m(
-          "dialoge.w3-Modal.content w3-card",
-          m(".w3-container", mdl.state.modalContent)
+        mdl.state.showModal && m(
+          ".content w3-card", m(".w3-container", mdl.state.modalContent)
         )
       ),
   }

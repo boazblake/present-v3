@@ -90,10 +90,10 @@
 [Mon, 30 May 2022 14:02:52 GMT] [info] [<0.000.0>] 127.0.0.1 - - GET /_membership 304
 [Mon, 30 May 2022 14:02:52 GMT] [info] [<0.000.0>] 127.0.0.1 - - GET /_membership 304
 [Mon, 30 May 2022 14:03:07 GMT] [info] [<0.000.0>] 127.0.0.1 - - GET /_utils/dashboard.assets/img/pouchdb-minilogo.png 200
-[Mon, 30 May 2022 14:11:43 GMT] [info] [<0.000.0>] 127.0.0.1 - - GET /trello/ 404
-[Mon, 30 May 2022 14:11:43 GMT] [info] [<0.000.0>] 127.0.0.1 - - PUT /trello/ 201
-[Mon, 30 May 2022 14:11:43 GMT] [info] [<0.000.0>] 127.0.0.1 - - GET /trello/projects? 404
-[Mon, 30 May 2022 14:11:43 GMT] [info] [<0.000.0>] 127.0.0.1 - - GET /trello/_all_docs? 200
-[Mon, 30 May 2022 14:11:43 GMT] [info] [<0.000.0>] 127.0.0.1 - - POST /trello/_bulk_docs 201
+[Mon, 30 May 2022 14:11:43 GMT] [info] [<0.000.0>] 127.0.0.1 - - GET /presentations/ 404
+[Mon, 30 May 2022 14:11:43 GMT] [info] [<0.000.0>] 127.0.0.1 - - PUT /presentations/ 201
+[Mon, 30 May 2022 14:11:43 GMT] [info] [<0.000.0>] 127.0.0.1 - - GET /presentations/projects? 404
+[Mon, 30 May 2022 14:11:43 GMT] [info] [<0.000.0>] 127.0.0.1 - - GET /presentations/_all_docs? 200
+[Mon, 30 May 2022 14:11:43 GMT] [info] [<0.000.0>] 127.0.0.1 - - POST /presentations/_bulk_docs 201
 [Mon, 30 May 2022 14:11:49 GMT] [info] [<0.000.0>] 127.0.0.1 - - GET // 404
 [Mon, 30 May 2022 14:11:49 GMT] [info] [<0.000.0>] 127.0.0.1 - - PUT // 404
