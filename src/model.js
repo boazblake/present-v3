@@ -45,8 +45,8 @@ const model = {
   },
   presentations: [],
   slides: [],
-  currentPresentationId: null,
-  currentSlideId: null,
+  slide: null,
+  presentation: null,
   toggleMode: mdl => mdl.state.editor = !mdl.state.editor
 }
 export default model

@@ -4,7 +4,7 @@ import { Sortable, Plugins } from '@shopify/draggable';
 import { loadSlidesByProjectId as reload } from '../model.js'
 import { propEq, } from 'ramda'
 
-const updateSlides = mdl => state => ({ oldIndex, newIndex }) => {
+const updateSlides = mdl => ({ oldIndex, newIndex }) => {
   const slide = mdl.slides.find(propEq('order', oldIndex))
   slide.order = newIndex
 
@@ -15,6 +15,11 @@ const updateSlides = mdl => state => ({ oldIndex, newIndex }) => {
   mdl.http
     .putTask(mdl, `slides/${slide.id}`, slide)
     .fork(log("error"), onSuccess)
+}
+
+const deleteSlide = (mdl, slide) => {
+  mdl.http.deleteTask(mdl, `slides/${slide.id}`).fork(log('error'), () => reload(mdl, mdl.presentation.id))
+  return false
 }
 
 const newViewer = (state, dom, slide) => {
@@ -33,17 +38,17 @@ const Contents = {
 
 const MiniSlide = ({ attrs: { key, state } }) => {
   return {
-    view: ({ attrs: { slide, mdl } }) => m('.w3-bar-item.w3-border.pointer.w3-margin.dragMe', {
+    view: ({ attrs: { slide, mdl } }) => m('.w3-bar-item.w3-border.pointer.w3-margin.dragMe.w3-display-container', {
       draggable: true,
-      // ondragstart: drag(mdl)(slide),
+      class: mdl.slide?.id == key && 'w3-border-orange',
       ondragover: false,
       key, id: key,
       onclick: () => { mdl.slide = slide; !mdl.state.editor && mdl.state.showMiniSlider(false) },
       style: { width: '150px', height: '150px', maxWidth: '150px', maxHeight: '150px', minWidth: '150px', minHeight: '150px', overflow: 'hidden' },
     },
+      mdl.state.editor && mdl.slides.length > 1 && m('.w3-display-topright.w3-circle', m('button.w3-red.w3-border.w3-btn.w3-circle', { onclick: () => deleteSlide(mdl, slide) }, m.trust('&times;'))),
       m('header.w3-container.w3-bar',
         m('.w3-left', slide.title),
-        m('.w3-right', m('m.w3-badge', slide.order))
       ),
       m(Contents, { mdl, state, slide }),
       m('footer.w3-container')
@@ -55,13 +60,13 @@ const MiniSlider = () => {
   return {
     view: ({ attrs: { mdl, state } }) =>
       m('section.w3-section', {
-        onmouseenter: () => state.showSlideBtn = true,
-        onmouseleave: () => state.showSlideBtn = false,
+        onmouseenter: () => state.showSlidesBtn(true),
+        onmouseleave: () => state.showSlidesBtn(false),
         style: { 'height': `${state.calcHeight(state)}px`, },
       },
         mdl.state.showMiniSlider() && m(".w3-bar", {
           oncreate: ({ dom }) => {
-            new Sortable([dom], {
+            mdl.state.editor && new Sortable([dom], {
               draggable: '.dragMe',
               distance: 5,
               mirror: {
@@ -73,13 +78,12 @@ const MiniSlider = () => {
                 easingFunction: 'ease-in-out',
               },
             }).on('click', log('wtf'))
-              .on('sortable:stop', updateSlides(mdl)(state))
+              .on('sortable:stop', updateSlides(mdl))
           },
           style: { height: '200px', overflow: "auto" }
         },
           mdl.slides.map(slide => m(MiniSlide, { key: slide.id, slide, mdl, state })),
-        ),
-        state.showSlideBtn && m('.w3-display-container', m('button.w3-button.w3-display-topmiddle.w3-white w3-border w3-round-xlarge', { onclick: () => mdl.state.showMiniSlider(!mdl.state.showMiniSlider()) }, mdl.state.showMiniSlider() ? 'HIDE SLIDES' : 'SHOW SLIDES'),)
+        )
       )
   }
 }

@@ -1,3 +1,7 @@
+html {
+  overflow: 'hidden'
+}
+
 .move-right {
   margin-left: 200px !important;
 }

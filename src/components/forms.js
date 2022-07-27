@@ -43,7 +43,7 @@ const NewPresentationForm = () => {
   return {
     view: ({ attrs: { mdl } }) =>
       m(
-        "form.w3-container.w3-card.w3-white.w3-animate-zoom",
+        "form.w3-container.w3-card.w3-white",
         { onsubmit: (e) => e.preventDefault() },
         m(
           "div.w3-section",
@@ -72,7 +72,7 @@ const NewSlideForm = () => {
   return {
     view: ({ attrs: { mdl } }) =>
       m(
-        "form.w3-container.w3-card.w3-white.w3-animate-zoom",
+        "form.w3-container.w3-card.w3-white",
         { onsubmit: (e) => e.preventDefault() },
         m(
           "div.w3-section",

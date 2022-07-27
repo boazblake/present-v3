@@ -63,7 +63,7 @@ const Toolbar = () => {
 
 
         m('.w3-right',
-          !homeRoute() && m(
+          !homeRoute() && m('.w3-grouped', m(
             "button.w3-button.w3-border",
             {
               onclick: () => {
@@ -72,7 +72,22 @@ const Toolbar = () => {
               }
             },
             mdl.state.editor ? 'PLAY' : 'EDIT'
-          )),
+          ),
+            !mdl.state.editor && m(
+              "button.w3-button.w3-border",
+              {
+                onclick: () => {
+                  mdl.state.showMiniSlider(false)
+                  console.log(mdl)
+                  mdl.slide = mdl.slides[0]
+                }
+              },
+              m('i', {
+                style: {
+                  fontSize: '15px'
+                },
+              }, m.trust('&#8634;'))
+            ))),
 
 
 

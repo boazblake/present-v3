@@ -3,7 +3,7 @@ const Modal = ({ attrs: { mdl } }) => {
   return {
     view: () =>
       m(
-        "dialog.w3-modal#modal",
+        ".w3-modal#modal",
         {
           open: mdl.state.showModal,
           onclick: (e) => {
@@ -15,8 +15,8 @@ const Modal = ({ attrs: { mdl } }) => {
           style: { display: mdl.state.showModal ? "block" : "none" },
         },
         mdl.state.showModal && m(
-          ".content w3-card", m(".w3-container", mdl.state.modalContent)
-        )
+          ".w3-modal-content.w3-animate-top", mdl.state.modalContent)
+
       ),
   }
 }

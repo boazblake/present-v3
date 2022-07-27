@@ -81,7 +81,7 @@ const newEditor = (mdl, state, dom) => {
   mdl.editor = new Editor({
     autofocus: true,
     viewer: true,
-    height: `${window.innerHeight - state.calcHeight(state) - 105}px`,
+    height: `${window.innerHeight - state.sliderHeight() - 122}px`,
     el: dom,
     initialValue: mdl.slide.contents,
     initialHTML: mdl.slide.contents,
@@ -115,7 +115,7 @@ const mdEditor = ({ attrs: { mdl, state } }) => {
       }
     },
     view: () =>
-      m('.w3-section#editor', { style: { height: `${window.innerHeight - state.calcHeight(state) - 105}px` } })
+      m('.w3-section#editor', { style: { height: `${window.innerHeight - state.sliderHeight() - 130}px` } })
   }
 }
 
