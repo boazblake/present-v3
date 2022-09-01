@@ -7,10 +7,10 @@ import Editor from '@toast-ui/editor'
 
 let timer = 0
 
-const updateSlideTask = (mdl, slide) => mdl.http.putTask(mdl, `slides/${slide.id}`, slide)
+const updateSlideTask = (mdl, slide) => mdl.http.putTask(mdl, `update-slide-details/${mdl.presentation.id}`, slide)
 
 const updateSlide = (mdl, slide, state) => {
-  timer = setTimeout(() => { console.log('able to save now'); clearTimeout(timer); timer = null }, threeSeconds)
+  timer = setTimeout(() => { console.log('able to save now'); updateContents(mdl, slide, state); clearTimeout(timer); timer = null }, threeSeconds)
 
   const onError = (e) => {
     log('error')(e);
@@ -22,17 +22,17 @@ const updateSlide = (mdl, slide, state) => {
     reload(mdl, mdl.presentation.id)
     state.dirty = false
   }
-
+  console.log('saving...', slide)
   updateSlideTask(mdl, slide).fork(onError, onSuccess)
 }
 
 const updateContents = (mdl, slide, state) => {
   slide.contents = mdl.editor.getMarkdown()
-  timer ? console.log('debounce') : updateSlide(mdl, slide, state)
+  timer ? console.log('waiting...') : updateSlide(mdl, slide, state)
 }
 
 const watcher = (mdl, state) =>
-  setInterval(() => state.dirty && updateContents(mdl, mdl.slide, state), threeSeconds)
+  state.watcher = setInterval(() => state.dirty && updateContents(mdl, mdl.slide, state), threeSeconds)
 
 const getBase64 = file => {
   return new Promise((res, rej) => {
@@ -97,19 +97,14 @@ const newEditor = (mdl, state, dom) => {
 }
 
 const mdEditor = ({ attrs: { mdl, state } }) => {
-  if (!mdl.slide) {
-    mdl.slide = mdl.slides[0]
-  }
-  state.slideId = mdl.slide.id
-  state.dirty = false
-
   watcher(mdl, state)
-
+  console.log(mdl, state)
   return {
+    // onremove: () => { },
     oncreate: ({ dom, attrs: { mdl, state } }) => newEditor(mdl, state, dom),
     onupdate: ({ dom, attrs: { mdl, state } }) => {
-      if (mdl.slide.id !== state.slideId) {
-        state.slideId = mdl.slide.id
+      if (mdl.slide.filename !== state.slideId) {
+        state.slideId = mdl.slide.filename
         mdl.editor.destroy()
         newEditor(mdl, state, dom)
       }

@@ -13,19 +13,18 @@
     "build:pre": "rm -rf dist"
   },
   "dependencies": {
-    "@bunchtogether/vite-plugin-flow": "^1.0.2",
+    "@shopify/draggable": "1.0.0-beta.12",
     "@toast-ui/editor": "^3.1.8",
     "@types/mithril": "^2.0.11",
-    "@shopify/draggable": "1.0.0-beta.13",
     "data.task": "^3.1.2",
     "eslint": "^8.20.0",
     "flow-remove-types": "^2.179.0",
-    "interactjs": "^1.9.10",
     "mithril": "^2.2.0",
     "mithril-stream": "^2.0.0",
     "ramda": "^0.27.0"
   },
   "devDependencies": {
+    "@bunchtogether/vite-plugin-flow": "^1.0.2",
     "vite": "^2.6.2"
   }
 }

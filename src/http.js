@@ -57,7 +57,7 @@ const HttpTask = (method) => (mdl) => (url) => (body) => {
     m
       .request({
         method,
-        url: baseUrl + url,
+        url,
         headers,
         body,
         withCredentials: false,
@@ -68,10 +68,11 @@ const HttpTask = (method) => (mdl) => (url) => (body) => {
 }
 
 const http = {
-  getTask: (mdl, url) => HttpTask("GET")(mdl)(url)(),
-  postTask: (mdl, url, body) => HttpTask("POST")(mdl)(url)(body),
-  putTask: (mdl, url, body) => HttpTask("PUT")(mdl)(url)(body),
-  deleteTask: (mdl, url) => HttpTask("DELETE")(mdl)(url)(),
+  getTask: (mdl, url) => HttpTask("GET")(mdl)(baseUrl + url)(),
+  postTask: (mdl, url, body) => HttpTask("POST")(mdl)(baseUrl + url)(body),
+  postOutTask: (mdl, url, body) => HttpTask("POST")(mdl)(url)(body),
+  putTask: (mdl, url, body) => HttpTask("PUT")(mdl)(baseUrl + url)(body),
+  deleteTask: (mdl, url) => HttpTask("DELETE")(mdl)(baseUrl + url)(),
 }
 
 export default http

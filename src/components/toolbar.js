@@ -1,9 +1,11 @@
 import m from "mithril"
 import { NewPresentationForm, NewSlideForm } from "./forms"
-const homeRoute = () => m.route.get() == '/'
+const homeRoute = () => m.route.get() == '/presentations'
+const slideRoute = () => m.route.get().split('/')[1] == 'presentation'
+const authRoute = () => m.route.get() == '/login'
 
 const addPresentation = (mdl, state) => {
-  let presentation = PRESENTATION(state.title)
+  const presentation = PRESENTATION(state.title)
 
   const onError = log("error")
   const onSuccess = (data) => {
@@ -13,7 +15,7 @@ const addPresentation = (mdl, state) => {
     loadAllPresentationsTask(mdl)
   }
 
-  let titles = pluck('title', mdl.presentations)
+  const titles = pluck('title', mdl.presentations)
   if (titles.includes(presentation.title)) {
     return alert('Title is not uniqe')
   } else {
@@ -46,24 +48,29 @@ const Toolbar = () => {
       return m(
 
         "nav.w3-bar.w3-container.w3-padding.w3-fixed.w3-display-container",
-        !homeRoute() && m('.w3-display-middle', mdl.presentation?.title),
+        slideRoute() && m('.w3-display-middle', mdl.presentation?.title),
 
-        m('.w3-left', !homeRoute() && m(
-          "button.w3-button.w3-border",
-          { onclick: () => m.route.set('/') },
-          "Back"
-        ),
+        m('.w3-left',
 
-          m(
+          [slideRoute() && m(
+            "button.w3-button.w3-border",
+            { onclick: () => m.route.set('/') },
+            "Back"
+          )],
+
+          [!authRoute() && m(
             "button.w3-button.w3-border",
             { onclick: () => addNew(mdl) },
             homeRoute() ? "Add Presentation" : "Add Slide"
-          )),
+          )]
+
+
+        ),
 
 
 
         m('.w3-right',
-          !homeRoute() && m('.w3-grouped', m(
+          slideRoute() && m('.w3-bar', m(
             "button.w3-button.w3-border",
             {
               onclick: () => {

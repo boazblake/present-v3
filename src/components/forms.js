@@ -22,8 +22,7 @@ const addPresentation = (mdl, state) => {
 }
 
 const addSlide = (mdl, state) => {
-  const order = Math.max(...(pluck('order', mdl.slides)).map(x => parseInt(x))) + 1
-  const slide = SLIDE(state.title, currentPresentationId(), order)
+  const slide = SLIDE(state.title, currentPresentationId())
 
   const onError = log("error")
   const onSuccess = () => {

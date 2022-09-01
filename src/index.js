@@ -47,5 +47,6 @@ const checkWidth = (winW) => {
 model.settings.profile = getProfile(winW)
 
 checkWidth(winW)
-m.route(root, '/', App(model))
+
+m.route(root, '/login', App(model))
 

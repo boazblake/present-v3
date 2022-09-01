@@ -14,13 +14,20 @@ const SlideToolBar = {
       onmouseenter: () => state.showSlidesBtn(true),
       onmouseleave: () => state.showSlidesBtn(false),
     },
-      mdl.slide && mdl.state.editor && m('input.w3-input', { style: { width: '200px' }, value: mdl.slide.title, oninput: ({ target: { value } }) => mdl.slide.title = value }),
-
-      state.showSlidesBtn() && m('button.w3-button.w3-display-topmiddle.w3-white w3-border w3-round-xlarge', { onclick: () => mdl.state.showMiniSlider(!mdl.state.showMiniSlider()) }, mdl.state.showMiniSlider() ? 'HIDE SLIDES' : 'SHOW SLIDES'))
+      mdl.state.editor && m('input.w3-input', {
+        style: { width: '200px' },
+        value: mdl.slide.title,
+        oninput: ({ target: { value } }) => { mdl.slide.title = value; state.dirty = true }
+      }),
+      state.showSlidesBtn() &&
+      m('button.w3-button.w3-display-topmiddle.w3-white w3-border w3-round-xlarge', { onclick: () => mdl.state.showMiniSlider(!mdl.state.showMiniSlider()) }, mdl.state.showMiniSlider() ? 'HIDE SLIDES' : 'SHOW SLIDES')
+    )
 }
 
 export const Slides = ({ attrs: { mdl } }) => {
   const state = {
+    watcher: null,
+    dirt: false,
     cursor: Stream('pointer'),
     slideId: mdl.slide?.id,
     sliderHeight: Stream(160),
@@ -31,13 +38,11 @@ export const Slides = ({ attrs: { mdl } }) => {
   }
   loadSlidesByProjectId(mdl, currentPresentationId())
   return {
-    onremove: ({ attrs: { mdl } }) => { mdl.editor = null; mdl.slide = null; mdl.slides = [] },
+    onremove: ({ attrs: { mdl } }) => { mdl.editor = null; mdl.slide = null; mdl.slides = []; clearInterval(state.watcher); state.watcher = null },
     view: ({ attrs: { mdl } }) => {
-      return !isEmpty(mdl.slides) ? m("section.w3-theme.w3-container", {
-        style: { overflow: 'none' },
-      },
-        m(MiniSlider, { mdl, state }),
+      return !isEmpty(mdl.slides) ? m("section.w3-theme.w3-container",
         m(SlideToolBar, { mdl, state }),
+        m(MiniSlider, { mdl, state }),
         mdl.state.editor ? m(mdEditor, { mdl, state }) : m(mdViewer, { mdl, state })
       ) : m('.w3-panel.w3-pale-blue', 'Loading')
     },
