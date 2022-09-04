@@ -40,7 +40,14 @@ export const Slides = ({ attrs: { mdl } }) => {
   }
   loadSlidesByProjectId(mdl, currentPresentationId())
   return {
-    onremove: ({ attrs: { mdl } }) => { mdl.editor = null; mdl.slide = null; mdl.slides = []; clearInterval(state.watcher); state.watcher = null },
+    onremove: ({ attrs: { mdl } }) => {
+      mdl.state.editor = true
+      mdl.editor = null
+      mdl.slide = null
+      mdl.slides = []
+      clearInterval(state.watcher)
+      state.watcher = null
+    },
     view: ({ attrs: { mdl } }) => {
       return !isEmpty(mdl.slides) && m("section.w3-theme.w3-container",
         m(SlideToolBar, { mdl, state }),
