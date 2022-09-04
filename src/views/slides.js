@@ -14,11 +14,13 @@ const SlideToolBar = {
       onmouseenter: () => state.showSlidesBtn(true),
       onmouseleave: () => state.showSlidesBtn(false),
     },
-      mdl.state.editor && m('input.w3-input', {
-        style: { width: '200px' },
-        value: mdl.slide.title,
-        oninput: ({ target: { value } }) => { mdl.slide.title = value; state.dirty = true }
-      }),
+      mdl.state.editor && m('',
+        { style: { width: '350px' }, },
+        m('input.w3-input.w3-animate-input', {
+          value: mdl.slide.title,
+          style: { width: '350px' },
+          oninput: ({ target: { value } }) => { mdl.slide.title = value; state.dirty = true }
+        })),
       state.showSlidesBtn() &&
       m('button.w3-button.w3-display-topmiddle.w3-white w3-border w3-round-xlarge', { onclick: () => mdl.state.showMiniSlider(!mdl.state.showMiniSlider()) }, mdl.state.showMiniSlider() ? 'HIDE SLIDES' : 'SHOW SLIDES')
     )
@@ -40,11 +42,11 @@ export const Slides = ({ attrs: { mdl } }) => {
   return {
     onremove: ({ attrs: { mdl } }) => { mdl.editor = null; mdl.slide = null; mdl.slides = []; clearInterval(state.watcher); state.watcher = null },
     view: ({ attrs: { mdl } }) => {
-      return !isEmpty(mdl.slides) ? m("section.w3-theme.w3-container",
+      return !isEmpty(mdl.slides) && m("section.w3-theme.w3-container",
         m(SlideToolBar, { mdl, state }),
         m(MiniSlider, { mdl, state }),
         mdl.state.editor ? m(mdEditor, { mdl, state }) : m(mdViewer, { mdl, state })
-      ) : m('.w3-panel.w3-pale-blue', 'Loading')
+      )
     },
   }
 }

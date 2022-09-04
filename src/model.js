@@ -1,17 +1,26 @@
+import m from 'mithril'
 import http from "./http.js"
-import { log, uuid } from "./helpers.ts"
 import Stream from 'mithril-stream'
+
+const onError = ({ response: { error } }) => {
+  console.error('ERROR', error)
+  switch (error) {
+    case 'relogin':
+      m.route.set('/')
+      break;
+  }
+}
 
 export const loadAllPresentationsTask = (mdl) =>
   mdl.http
     .getTask(mdl, 'presentations')
-    .fork(log("error"), presentations => mdl.presentations = presentations)
+    .fork(onError, presentations => mdl.presentations = presentations)
 
 export const loadSlidesByProjectId = (mdl, presentationId) =>
   mdl.http
     .getTask(mdl, `presentation/${presentationId}`,)
-    .fork(_ => { mdl.error = 'No Presentation with that Id' }, ({ slides, title, id }) => {
-      mdl.slides = (slides)
+    .fork(onError, ({ slides, title, id }) => {
+      mdl.slides = slides
       mdl.presentation = { title, id }
       if (!mdl.slide) {
         mdl.slide = mdl.slides[0]
@@ -20,15 +29,12 @@ export const loadSlidesByProjectId = (mdl, presentationId) =>
 
 
 
-export const PRESENTATION = (title, order = 0) => ({
+export const PRESENTATION = (title) => ({
   title,
-  id: uuid(),
-  order,
 })
 
 export const SLIDE = (title, presentationId, order = 0) => ({
   title,
-  id: uuid(),
   contents: '',
   content: `${order}_sort_`,
   order,
@@ -45,7 +51,9 @@ const model = {
     },
     showModal: false,
     modalContent: null,
-    showMiniSlider: Stream(false)
+    showMiniSlider: Stream(false),
+    isLoading: Stream(true),
+    loadingProgress: { max: 0, value: 0 }
   },
   presentations: [],
   slides: [],

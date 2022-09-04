@@ -9,3 +9,13 @@ html {
 .pointer {
   cursor: pointer;
 }
+
+
+  .fancy-draw {
+    border-bottom-color: #60daaa;
+    border-left-color: #60daaa;
+    transition:
+      border-color 0.15s ease-in-out 0.25s,
+      width 0.25s ease-in-out 0.25s,
+      height 0.25s ease-in-out 0.25s;
+  }

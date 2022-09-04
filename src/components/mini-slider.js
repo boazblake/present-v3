@@ -7,13 +7,11 @@ import Task from 'data.task'
 
 const updateSlides = mdl => ({ oldIndex, newIndex }) => {
   const slide = mdl.slides.find(propEq('order', oldIndex))
-  console.log('HERE', oldIndex, newIndex, slide, mdl)
   if (oldIndex != newIndex) {
     slide.order = newIndex
 
-    const onSuccess = (_) => {
-      reload(mdl, mdl.presentation.id)
-    }
+    const onSuccess = (_) => reload(mdl, mdl.presentation.id)
+
 
     mdl.http
       .putTask(mdl, `update-slide-order/${slide.filename}`, slide)
@@ -56,20 +54,20 @@ const Contents = {
 
 const MiniSlide = ({ attrs: { key, state } }) => {
   return {
+    onupdate: ({ dom, attrs: { mdl } }) => { mdl.slide.filename == key && dom.scrollIntoView({ behavior: "smooth", block: "center", }) },
     view: ({ attrs: { slide, mdl } }) => m('.w3-bar-item.w3-border.pointer.w3-margin.dragMe.w3-display-container', {
       draggable: true,
       class: mdl.slide.filename == key && 'w3-border-orange',
       ondragover: false,
       key, id: key,
       onclick: () => { mdl.slide = slide; !mdl.state.editor && mdl.state.showMiniSlider(false) },
-      style: { width: '150px', height: '150px', maxWidth: '150px', maxHeight: '150px', minWidth: '150px', minHeight: '150px', overflow: 'hidden', },
+      style: { width: '150px', height: '150px', maxWidth: '150px', maxHeight: '150px', minWidth: '150px', minHeight: '150px', overflow: 'hidden', transition: 'border 0.15s ease-in-out 0.25s' },
     },
-      mdl.state.editor && mdl.slides.length > 1 && m('.w3-display-topright.w3-circle', m('button.w3-red.w3-border.w3-btn.w3-circle', { onclick: () => deleteSlide(mdl, slide) }, m.trust('&times;'))),
+      mdl.state.editor && mdl.slides.length > 1 && m('.w3-display-topright', m('button.w3-btn.w3-round.w3-red', { onclick: () => deleteSlide(mdl, slide) }, m.trust('&times;'))),
       m('header.w3-container.w3-bar',
         m('.w3-left', slide.title),
       ),
       m(Contents, { mdl, state, slide }),
-      m('footer.w3-container')
     ),
   }
 }

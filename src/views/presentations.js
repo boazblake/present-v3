@@ -10,7 +10,6 @@ const deletePresentation = (mdl, id) => {
 
 
 const Presentation = () => {
-  // console.log('presentations', window)
   return {
     view: ({ attrs: { mdl, title, action, key } }) => m(
       "button.w3-border-0.w3-button.w3-card.w3-margin.w3-display-container",
@@ -21,7 +20,7 @@ const Presentation = () => {
         },
         onclick: action,
       },
-      m('.w3-display-topright', m('button.w3-btn.w3-badge.w3-red', { onclick: () => deletePresentation(mdl, key) }, 'x')),
+      m('.w3-display-topright', m('button.w3-btn.w3-round.w3-red', { onclick: () => deletePresentation(mdl, key) }, 'x')),
       m('.w3-container', title)
     )
   }

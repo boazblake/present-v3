@@ -98,7 +98,7 @@ const newEditor = (mdl, state, dom) => {
 
 const mdEditor = ({ attrs: { mdl, state } }) => {
   watcher(mdl, state)
-  console.log(mdl, state)
+  // console.log(mdl, state)
   return {
     // onremove: () => { },
     oncreate: ({ dom, attrs: { mdl, state } }) => newEditor(mdl, state, dom),
