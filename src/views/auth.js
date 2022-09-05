@@ -1,6 +1,6 @@
 import m from "mithril"
 
-const getFrontEnd = () => window.location.origin.includes('3000') ? 'http://localhost:3000/auth' : 'https://boazblake.github.io/present-v3/#!/auth'
+const getFrontEnd = () => window.location.origin.includes('3000') ? 'http://localhost:3000/auth/' : 'https://boazblake.github.io/present-v3/#!/auth/'
 
 export const Auth = ({ attrs: { mdl } }) => {
 
@@ -12,7 +12,7 @@ export const Auth = ({ attrs: { mdl } }) => {
       if (window.location.search == '') {
         const opts = { client_id: '53d799dd7a4fafdde029', redirect_uri: getFrontEnd(), type: 'user_agent', scope: 'gist' }
         const param = new URLSearchParams(opts).toString()
-        const uri = 'https://github.com/login/oauth/authorize'
+        const uri = 'https://github.com/login/oauth/authorize/'
         const url = `${uri}?${param}`
         window.location = url
       } else if (!window.hasCode) {
