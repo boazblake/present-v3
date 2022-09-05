@@ -2,6 +2,9 @@ import m from 'mithril'
 import http from "./http.js"
 import Stream from 'mithril-stream'
 
+
+export const serverURL = "http://boazblake-present-api-v3.deno.dev/"
+
 const onError = ({ response: { error } }) => {
   console.error('ERROR', error)
   switch (error) {

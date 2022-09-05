@@ -1,7 +1,7 @@
 import Task from "data.task"
 import m from "mithril"
+import { serverURL } from './model'
 
-const baseUrl = "http://localhost:3001/"
 
 const headers = {
   "Content-Type": "application/json",
@@ -68,11 +68,11 @@ const HttpTask = (method) => (mdl) => (url) => (body) => {
 }
 
 const http = {
-  getTask: (mdl, url) => HttpTask("GET")(mdl)(baseUrl + url)(),
-  postTask: (mdl, url, body) => HttpTask("POST")(mdl)(baseUrl + url)(body),
+  getTask: (mdl, url) => HttpTask("GET")(mdl)(serverURL + url)(),
+  postTask: (mdl, url, body) => HttpTask("POST")(mdl)(serverURL + url)(body),
   postOutTask: (mdl, url, body) => HttpTask("POST")(mdl)(url)(body),
-  putTask: (mdl, url, body) => HttpTask("PUT")(mdl)(baseUrl + url)(body),
-  deleteTask: (mdl, url) => HttpTask("DELETE")(mdl)(baseUrl + url)(),
+  putTask: (mdl, url, body) => HttpTask("PUT")(mdl)(serverURL + url)(body),
+  deleteTask: (mdl, url) => HttpTask("DELETE")(mdl)(serverURL + url)(),
 }
 
 export default http
