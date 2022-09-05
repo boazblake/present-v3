@@ -18,11 +18,11 @@ export const Auth = ({ attrs: { mdl } }) => {
         mdl.http.postTask(mdl, 'auth', { code }).fork((e) => { window.aaae = e }, s => {
           console.log('token', s)
           window.hasCode = true
-          window.location = window.location.origin + 'present-v3/#!/'
-          m.route.set('/presentations')
+          // window.location = window.location.origin + 'present-v3/#!/'
+          // m.route.set('/presentations')
         })
       } else if (window.hasCode) {
-        m.route.set('/presentations')
+        // m.route.set('/presentations')
       }
     }
   })
