@@ -21,7 +21,7 @@ export const Auth = ({ attrs: { mdl } }) => {
         mdl.http.postTask(mdl, 'auth', { code }).fork((e) => { window.aaae = e }, s => {
           console.log('token', JSON.stringify(s), window.location)
           window.hasCode = true
-          window.location = 'https://boazblake.github.io/present-v3/#!/presentations'
+          window.location = 'https://boazblake.github.io/present-v3/#!/presentations/'
           m.route.set('/presentations')
         })
       } else if (window.hasCode) {
@@ -30,11 +30,7 @@ export const Auth = ({ attrs: { mdl } }) => {
     }
   })
 
-
-
-
   return {
-    // oncreate:() => {},
     view: ({ attrs: { mdl } }) =>
       m(
         "section.w3-section.w3-padding-row",
