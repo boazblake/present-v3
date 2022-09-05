@@ -16,9 +16,9 @@ export const Auth = ({ attrs: { mdl } }) => {
         const code = window.location.search.split('?code=')[1]
         window.aaaacode = code
         mdl.http.postTask(mdl, 'auth', { code }).fork((e) => { window.aaae = e }, s => {
-          console.log('token', s)
+          console.log('token', s, window.location)
           window.hasCode = true
-          // window.location = window.location.origin + 'present-v3/#!/'
+          // window.location = 'https://boazblake.github.io/present-v3/#!/presentations'
           // m.route.set('/presentations')
         })
       } else if (window.hasCode) {
