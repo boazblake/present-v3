@@ -6,7 +6,8 @@ export const Auth = ({ attrs: { mdl } }) => {
 
   mdl.http.getTask(mdl, 'isAuth').fork(log('e'), ({ isAuth }) => {
     if (isAuth) {
-      return m.route.set('/presentations')
+      console.log('isauth', isAuth)
+      // return m.route.set('/presentations')
     } else {
       if (window.location.search == '') {
         const opts = { client_id: '53d799dd7a4fafdde029', redirect_uri: getFrontEnd(), type: 'user_agent', scope: 'gist' }
