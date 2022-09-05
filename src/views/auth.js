@@ -1,12 +1,13 @@
 import m from "mithril"
-import { serverURL } from '../model'
+
+const getFrontEnd = () => window.location.origin.includes('3000') ? 'http://localhost:3000/auth' : 'https://boazblake.github.io/present-v3/auth'
 
 export const Auth = ({ attrs: { mdl } }) => {
 
   mdl.http.getTask(mdl, 'isAuth').fork(log('e'), ({ isAuth }) => {
     if (isAuth) { return m.route.set('/presentations') } else {
       if (window.location.search == '') {
-        const opts = { client_id: '53d799dd7a4fafdde029', redirect_uri: serverURL, type: 'user_agent', scope: 'gist' }
+        const opts = { client_id: '53d799dd7a4fafdde029', redirect_uri: getFrontEnd(), type: 'user_agent', scope: 'gist' }
         const param = new URLSearchParams(opts).toString()
         const uri = 'https://github.com/login/oauth/authorize'
         const url = `${uri}?${param}`
@@ -17,7 +18,7 @@ export const Auth = ({ attrs: { mdl } }) => {
         mdl.http.postTask(mdl, 'auth', { code }).fork((e) => { window.aaae = e }, s => {
           console.log('token', s)
           window.hasCode = true
-          window.location = window.location.origin + 'present-v3/#!/presentations'
+          window.location = window.location.origin + 'present-v3/#!/'
           m.route.set('/presentations')
         })
       } else if (window.hasCode) {
