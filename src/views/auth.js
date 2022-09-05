@@ -7,7 +7,7 @@ export const Auth = ({ attrs: { mdl } }) => {
   mdl.http.getTask(mdl, 'isAuth').fork(log('e'), ({ isAuth }) => {
     if (isAuth) { return m.route.set('/presentations') } else {
       if (window.location.search == '') {
-        const opts = { client_id: '53d799dd7a4fafdde029', type: 'user_agent', scope: 'gist' }
+        const opts = { client_id: '53d799dd7a4fafdde029', redirect_uri: getFrontEnd(), type: 'user_agent', scope: 'gist' }
         const param = new URLSearchParams(opts).toString()
         const uri = 'https://github.com/login/oauth/authorize'
         const url = `${uri}?${param}`
