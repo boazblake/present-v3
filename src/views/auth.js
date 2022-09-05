@@ -1,6 +1,6 @@
 import m from "mithril"
 
-const getFrontEnd = () => window.location.origin.includes('3000') ? 'http://localhost:3000/auth' : 'https://boazblake.github.io/present-v3/auth'
+const getFrontEnd = () => window.location.origin.includes('3000') ? 'http://localhost:3000/auth' : 'https://boazblake.github.io/present-v3/#!/auth'
 
 export const Auth = ({ attrs: { mdl } }) => {
 
