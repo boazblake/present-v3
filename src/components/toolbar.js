@@ -2,7 +2,7 @@ import m from "mithril"
 import { NewPresentationForm, NewSlideForm } from "./forms"
 const homeRoute = () => m.route.get() == '/presentations'
 const slideRoute = () => m.route.get().split('/')[1] == 'presentation'
-const authRoute = () => m.route.get() == '/login'
+const authRoute = () => m.route.get() == '/auth'
 
 const addNew = (mdl) => {
   if (homeRoute()) {
