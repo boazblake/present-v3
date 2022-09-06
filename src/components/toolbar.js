@@ -13,14 +13,27 @@ const addNew = (mdl) => {
   mdl.state.showModal = true
 }
 
+
 const Toolbar = () => {
+  const state = {
+    showToolbar: true
+  }
+
+  const actionSettings = () => ({
+    onmouseenter: () => state.showToolbar = true,
+    onmouseleave: () => state.showToolbar = false,
+  })
+
+
+
   return {
-    view: ({ attrs: { mdl, state } }) => {
+    view: ({ attrs: { mdl } }) => {
       return m(
         "nav.w3-bar.w3-container.w3-padding.w3-fixed.w3-display-container",
+        slideRoute() && !mdl.state.editor && actionSettings(),
         slideRoute() && m('.w3-display-middle', mdl.presentation?.title),
 
-        m('.w3-left',
+        state.showToolbar && m('', m('.w3-left',
 
           slideRoute() && m(
             "button.w3-button.w3-border",
@@ -28,37 +41,38 @@ const Toolbar = () => {
             "Back"
           ),
 
-          !authRoute() && m(
+
+          !authRoute() && mdl.state.editor && m(
             "button.w3-button.w3-border",
             { onclick: () => addNew(mdl) },
             homeRoute() ? "Add Presentation" : "Add Slide"
           )),
 
-        m('.w3-right',
-          slideRoute() && m('.w3-bar', m(
-            "button.w3-button.w3-border",
-            {
-              onclick: () => {
-                mdl.state.showMiniSlider(false)
-                mdl.toggleMode(mdl)
-              }
-            },
-            mdl.state.editor ? 'PLAY' : 'EDIT'
-          ),
-            !mdl.state.editor && m(
+          m('.w3-right',
+            slideRoute() && m('.w3-bar', m(
               "button.w3-button.w3-border",
               {
                 onclick: () => {
                   mdl.state.showMiniSlider(false)
-                  mdl.slide = mdl.slides[0]
+                  mdl.toggleMode(mdl)
                 }
               },
-              m('i', {
-                style: {
-                  fontSize: '15px'
+              mdl.state.editor ? 'PLAY' : 'EDIT'
+            ),
+              !mdl.state.editor && m(
+                "button.w3-button.w3-border",
+                {
+                  onclick: () => {
+                    mdl.state.showMiniSlider(false)
+                    mdl.slide = mdl.slides[0]
+                  }
                 },
-              }, m.trust('&#8634;'))
-            ))),
+                m('i', {
+                  style: {
+                    fontSize: '15px'
+                  },
+                }, m.trust('&#8634;'))
+              ))))
       )
     },
   }

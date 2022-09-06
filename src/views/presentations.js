@@ -12,11 +12,11 @@ const deletePresentation = (mdl, id) => {
 const Presentation = () => {
   return {
     view: ({ attrs: { mdl, title, action, key } }) => m(
-      "button.w3-border-0.w3-button.w3-card.w3-margin.w3-display-container",
+      "button.w3-border-0.w3-button.w3-card.w3-display-container.w3-col.s12.m5.l3 ",
       {
         style: {
           height: '200px',
-          width: '200px',
+          margin: '3px',
         },
         onclick: action,
       },
@@ -34,9 +34,9 @@ export const Presentations = ({ attrs: { mdl } }) => {
   return {
     view: ({ attrs: { mdl } }) =>
       m(
-        "section.w3-section.w3-padding-row",
+        "section.w3-container",
         m(
-          "section.w3-section",
+          "section.w3-row",
           mdl.presentations.map(({ id, title }) => m(Presentation, { key: id, mdl, title, action: () => toPresentation(title, id) }))
         ),
       ),
