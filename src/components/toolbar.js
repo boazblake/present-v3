@@ -2,7 +2,7 @@ import m from "mithril"
 import { NewPresentationForm, NewSlideForm } from "./forms"
 const homeRoute = () => m.route.get() == '/presentations'
 const slideRoute = () => m.route.get().split('/')[1] == 'presentation'
-const authRoute = () => m.route.get() == '/auth'
+const isAuth = (mdl) => mdl.state.isAuth
 
 const addNew = (mdl) => {
   if (homeRoute()) {
@@ -42,7 +42,7 @@ const Toolbar = () => {
           ),
 
 
-          mdl.state.isAuth && mdl.state.editor && m(
+          isAuth(mdl) && mdl.state.editor && m(
             "button.w3-button.w3-border",
             { onclick: () => addNew(mdl) },
             homeRoute() ? "Add Presentation" : "Add Slide"
