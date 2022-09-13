@@ -21,6 +21,7 @@ export const Auth = ({ attrs: { mdl } }) => {
         mdl.http.postTask(mdl, 'auth', { code }).fork((e) => { window.aaae = e }, s => {
           // console.log('token', JSON.stringify(s), window.location)
           window.hasCode = true
+          mdl.state.isAuth = true
           window.location = getFrontEnd('presentations')
           m.route.set('/presentations')
         })
