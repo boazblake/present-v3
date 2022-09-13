@@ -9,8 +9,8 @@ const deletePresentation = (mdl, id) => {
   return false
 }
 
-const editPresentation = (mdl, key) => {
-  mdl.state.modalContent = m(NewPresentationForm, { mdl, key })
+const editPresentation = (mdl, key, title) => {
+  mdl.state.modalContent = m(NewPresentationForm, { mdl, key, title })
   mdl.state.showModal = true
   return false
 }
@@ -26,7 +26,7 @@ const Presentation = () => {
         },
         onclick: action,
       },
-      m('.w3-display-topright', m('button.w3-btn.w3-round.w3-blue', { onclick: () => editPresentation(mdl, key) }, '\u270F'), m('button.w3-btn.w3-round.w3-red', { onclick: () => deletePresentation(mdl, key) }, '\u00D7')),
+      m('.w3-display-topright', m('button.w3-btn.w3-round.w3-blue', { onclick: () => editPresentation(mdl, key, title) }, '\u270F'), m('button.w3-btn.w3-round.w3-red', { onclick: () => deletePresentation(mdl, key) }, '\u00D7')),
       m('.w3-container', title)
     )
   }
