@@ -22,7 +22,7 @@ const addPresentationTask = ({ mdl, state }) => {
 }
 
 const editPresentationTask = ({ mdl, state: { title }, key }) =>
-  mdl.http.putTask(mdl, `presentations/${key}`, { title })
+  mdl.http.putTask(mdl, `presentation/${key}`, { title })
 
 
 const save = ({ mdl, state, key }) => {
