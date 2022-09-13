@@ -1,5 +1,6 @@
 import m from "mithril"
 import { loadAllPresentationsTask } from "../model"
+import { NewPresentationForm } from "../components/forms"
 
 
 const deletePresentation = (mdl, id) => {
@@ -8,6 +9,11 @@ const deletePresentation = (mdl, id) => {
   return false
 }
 
+const editPresentation = (mdl, key) => {
+  mdl.state.modalContent = m(NewPresentationForm, { mdl, key })
+  mdl.state.showModal = true
+  return false
+}
 
 const Presentation = () => {
   return {
@@ -20,7 +26,7 @@ const Presentation = () => {
         },
         onclick: action,
       },
-      m('.w3-display-topright', m('button.w3-btn.w3-round.w3-red', { onclick: () => deletePresentation(mdl, key) }, 'x')),
+      m('.w3-display-topright', m('button.w3-btn.w3-round.w3-blue', { onclick: () => editPresentation(mdl, key) }, '\u270F'), m('button.w3-btn.w3-round.w3-red', { onclick: () => deletePresentation(mdl, key) }, '\u00D7')),
       m('.w3-container', title)
     )
   }
