@@ -42,7 +42,7 @@ const Toolbar = () => {
           ),
 
 
-          !authRoute() && mdl.state.editor && m(
+          mdl.state.isAuth && mdl.state.editor && m(
             "button.w3-button.w3-border",
             { onclick: () => addNew(mdl) },
             homeRoute() ? "Add Presentation" : "Add Slide"

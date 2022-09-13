@@ -1,12 +1,11 @@
 import m from "mithril"
-import { compose, pluck } from 'ramda'
+import { pluck } from 'ramda'
 import { SLIDE, PRESENTATION, loadAllPresentationsTask, loadSlidesByProjectId } from "../model"
 import { currentPresentationId } from '../helpers'
 import Task from "data.task/lib/task"
 
-const validateStateTask = (state) => {
+const validateStateTask = (mdl, state) => {
   const titles = pluck('title', mdl.presentations)
-  // state.title ? titles.includes(state.title) && alert('Title is not uniqe') : alert('Title is required')
   if (state.title) {
     if (titles.includes(state.title)) {
       return Task.rejected(('Title is not uniqe'))
@@ -38,7 +37,7 @@ const save = ({ mdl, state, key }) => {
     loadAllPresentationsTask(mdl)
   }
 
-  validateStateTask(state).chain(state =>
+  validateStateTask(mdl, state).chain(state =>
     state.add ? addPresentationTask({ mdl, state }) : editPresentationTask({ mdl, state, key })
   ).fork(onError, onSuccess)
 }
