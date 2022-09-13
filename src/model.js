@@ -3,7 +3,7 @@ import http from "./http.js"
 import Stream from 'mithril-stream'
 
 
-export const serverURL = "http://localhost:3001/"//"https://boazblake-present-api-v3.deno.dev/"
+export const serverURL = "https://boazblake-present-api-v3.deno.dev/"
 
 const onError = ({ response: { error } }) => {
   console.error('ERROR', error)
