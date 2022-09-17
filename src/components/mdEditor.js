@@ -1,5 +1,5 @@
 import m from 'mithril'
-import { threeSeconds } from '../helpers.ts'
+import { threeSeconds, fiveSeconds } from '../helpers.ts'
 import { addErrorToast, addSuccessToast, } from '../components/toaster.js'
 import { equals, isEmpty } from 'ramda'
 import { loadSlidesByProjectId as reload } from '../model.js'
@@ -10,7 +10,7 @@ let timer = 0
 const updateSlideTask = (mdl, slide) => mdl.http.putTask(mdl, `update-slide-details/${mdl.presentation.id}`, slide)
 
 const updateSlide = (mdl, slide, state) => {
-  timer = setTimeout(() => { console.log('able to save now'); updateContents(mdl, slide, state); clearTimeout(timer); timer = null }, threeSeconds)
+  timer = setTimeout(() => { console.log('able to save now'); updateContents(mdl, slide, state); clearTimeout(timer); timer = null }, fiveSeconds)
 
   const onError = (e) => {
     log('error')(e);
@@ -32,7 +32,7 @@ const updateContents = (mdl, slide, state) => {
 }
 
 const watcher = (mdl, state) =>
-  state.watcher = setInterval(() => state.dirty && updateContents(mdl, mdl.slide, state), threeSeconds)
+  state.watcher = setInterval(() => state.dirty && updateContents(mdl, mdl.slide, state), fiveSeconds)
 
 const getBase64 = file => {
   return new Promise((res, rej) => {
@@ -86,7 +86,13 @@ const newEditor = (mdl, state, dom) => {
     initialValue: mdl.slide.contents,
     initialHTML: mdl.slide.contents,
     placeholder: 'Add some text',
-    hooks: { addImageBlobHook: (x, cb) => { console.log('x', cb); getBase64(x).then(b64 => resizeBase64Img(b64, 50, 50)).then(cb) } },
+    hooks: {
+      addImageBlobHook:
+        (x, cb) => {
+          console.log('x', cb);
+          getBase64(x).then(b64 => resizeBase64Img(b64, 50, 50)).then(cb)
+        }
+    },
     events: {
       change: () => equals(mdl.slide.contents.length, mdl.editor.getMarkdown().length)
         ? state.dirty = false

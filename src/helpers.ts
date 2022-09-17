@@ -26,5 +26,6 @@ window.log = log;
 
 const currentPresentationId = () => m.route.get().split("=")[1];
 const threeSeconds = 3 * 1000;
+const fiveSeconds = 5 * 1000;
 
-export { currentPresentationId, debounce, log, range, threeSeconds, uuid };
+export {currentPresentationId, debounce, log, range, threeSeconds, uuid, fiveSeconds};
