@@ -50,7 +50,7 @@ const Toolbar = () => {
 
           m('.w3-right',
             slideRoute() && m('.w3-bar', m(
-              "button.w3-button.w3-border",
+              "button.w3-button.w3-border.w3-bar-item",
               {
                 onclick: () => {
                   mdl.state.showMiniSlider(false)
@@ -59,19 +59,33 @@ const Toolbar = () => {
               },
               mdl.state.editor ? 'PLAY' : 'EDIT'
             ),
-              !mdl.state.editor && m(
-                "button.w3-button.w3-border",
-                {
-                  onclick: () => {
-                    mdl.state.showMiniSlider(false)
-                    mdl.slide = mdl.slides[0]
-                  }
-                },
-                m('i', {
-                  style: {
-                    fontSize: '15px'
+              !mdl.state.editor && m('.w3-bar-item',
+                m('label.w3-label', mdl.state.fontSize, m(
+                  "input.w3-range",
+                  {
+                    min: 1, max: 2, step: 0.01,
+                    value: document.body.style.getPropertyValue('--view-p-font-size').split('rem')[0],
+                    type: 'range', oninput: ({ target: { value } }) => {
+                      document.body.style.setProperty('--view-p-font-size', `${value}rem`)
+                      document.body.style.setProperty('--view-p-line-height', `${value * 100 + 20}%`)
+                    }
                   },
-                }, m.trust('&#8634;'))
+
+                )),
+                m(
+                  "button.w3-button.w3-border",
+                  {
+                    onclick: () => {
+                      mdl.state.showMiniSlider(false)
+                      mdl.slide = mdl.slides[0]
+                    }
+                  },
+                  m('i', {
+                    style: {
+                      fontSize: '15px'
+                    },
+                  }, m.trust('&#8634;'))
+                )
               ))))
       )
     },

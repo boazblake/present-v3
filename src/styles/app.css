@@ -1,3 +1,8 @@
+:root {
+  --view-p-font-size: 1.1rem;
+  --view-p-line-height: 100%;
+}
+
 html {
   overflow: 'hidden'
 }
@@ -11,11 +16,17 @@ html {
 }
 
 
-  .fancy-draw {
-    border-bottom-color: #60daaa;
-    border-left-color: #60daaa;
-    transition:
-      border-color 0.15s ease-in-out 0.25s,
-      width 0.25s ease-in-out 0.25s,
-      height 0.25s ease-in-out 0.25s;
-  }
+#mdviewer  p {
+  font-size: var(--view-p-font-size);
+  line-height: var(--view-p-line-height)
+}
+
+.fancy-draw {
+  border-bottom-color: #60daaa;
+  border-left-color: #60daaa;
+  transition:
+    border-color 0.15s ease-in-out 0.25s,
+    width 0.25s ease-in-out 0.25s,
+    height 0.25s ease-in-out 0.25s;
+}
+
